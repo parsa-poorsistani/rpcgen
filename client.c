@@ -30,7 +30,9 @@ int main(int argc, char *argv[]) {
     }
     buf key = {strlen(argv[2]), argv[2]};
     buf value = {strlen(argv[3]), argv[3]};
-    put(key, value);
+        // changed here
+    struct kv pair = {key,value};
+    put(&pair);
   } else if (strcmp(argv[1], "get") == 0) {
     if (argc < 3) {
       printf("Key not specified.\nUsage: client get [KEY]\n");

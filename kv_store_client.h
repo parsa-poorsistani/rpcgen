@@ -9,5 +9,5 @@
 CLIENT* clnt_connect(char* host);
 int example(int input);
 char* echo(char* input);
-void put(buf key, buf value);
+void put(struct kv *pair);
 buf* get(buf key);

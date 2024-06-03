@@ -46,7 +46,7 @@ char* echo(char* input) {
   return ret;
 }
 
-void put(buf key, buf value) {
+void put(struct kv *pair) {
   CLIENT *clnt = clnt_connect(HOST);
 
   /* TODO */
