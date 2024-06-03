@@ -3,6 +3,9 @@
  */
 
 #include "kv_store_client.h"
+#include "kv_store.h"
+#include <stdio.h>
+#include <string.h>
 
 #define HOST "localhost"
 
@@ -40,7 +43,19 @@ char* echo(char* input) {
   char* ret;
 
   /* TODO */
+    buf inb;
+    inb.buf_len = strlen(input);
+    inb.buf_val = input;
+    buf *result;
 
+    result = echo_1(&inb, clnt);
+
+    if (result == (buf*)NULL) {
+        clnt_perror(clnt, "echo call failed");
+        exit(1);
+    }
+    ret = strndup(result->buf_val, result->buf_len);
+    xdr_free((xdrproc_t)xdr_int, (buf*)result);
   clnt_destroy(clnt);
   
   return ret;
@@ -50,7 +65,13 @@ void put(struct kv *pair) {
   CLIENT *clnt = clnt_connect(HOST);
 
   /* TODO */
-
+    void* res;
+    res = put_1(pair, clnt);
+    if (res == (void*) NULL) {
+        clnt_perror(clnt,"put call failed");
+        exit(1);
+    }
+    
   clnt_destroy(clnt);
 }
 
@@ -60,7 +81,16 @@ buf* get(buf key) {
   buf* ret;
 
   /* TODO */
-
+    buf *res;
+    res = get_1(&key, clnt);
+    if (res == (buf*)NULL) {
+        clnt_perror(clnt, "get call failed");
+        exit(1);
+    }
+    ret = (buf*)malloc(sizeof(buf));
+    ret->buf_val = strndup(res->buf_val, res->buf_len);
+    ret->buf_len = res->buf_len;
+    xdr_free((xdrproc_t)xdr_buf, (char *)res);
   clnt_destroy(clnt);
   
   return ret;

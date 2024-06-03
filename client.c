@@ -1,5 +1,6 @@
 #include "kv_store.h"
 #include "kv_store_client.h"
+#include <string.h>
 
 static char client_doc[] = "client subcommands:\n\
   \texample\tMake an EXAMPLE RPC\n\

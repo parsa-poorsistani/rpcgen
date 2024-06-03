@@ -70,7 +70,7 @@ int *example_1_svc(int *argp, struct svc_req *rqstp) {
 
 buf *echo_1_svc(buf *argp, struct svc_req *rqstp) {
     static buf msg;
-
+    printf("server echo RPC\n");
     if (msg.buf_val != NULL) {
         free(msg.buf_val);
     }
